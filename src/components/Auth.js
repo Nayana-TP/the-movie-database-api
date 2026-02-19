@@ -19,21 +19,23 @@ const Auth = ({ onAuthSuccess }) => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
+const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
 
     try {
-      const endpoint = isLogin ? '/api/login' : '/api/signup';
+      const endpoint = isLogin ? '/login' : '/signup';
       const payload = isLogin 
         ? { username: formData.username, password: formData.password }
         : formData;
 
-      console.log('Attempting to connect to:', `http://localhost:5000${endpoint}`);
+      console.log('Attempting to connect to:', `${API_BASE_URL}${endpoint}`);
       console.log('Payload:', payload);
 
-      const response = await fetch(`http://localhost:5000${endpoint}`, {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
